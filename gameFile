@@ -1,0 +1,152 @@
+
+# Question at the beginning to make it seems more interactive.
+start_question = input('Do you want to explore the mansion? (y/n) ')
+
+# Dictionary of rooms and Directions
+rooms = {'Front Porch': {'EAST': 'Grand Hall'},
+         'Grand Hall': {'NORTH': 'Kitchen', 'EAST': 'Master Bedroom', 'SOUTH': 'Dinning Room', 'WEST': 'Front Porch'},
+         'Kitchen': {'EAST': 'Pantry', 'SOUTH': 'Grand Hall'},
+         'Pantry': {'WEST': 'Kitchen'},
+         'Master Bedroom': {'NORTH': 'Secret Room', 'WEST': 'Grand Hall'},
+         'Secret Room': {'SOUTH': 'Master Bedroom'},
+         'Dinning Room': {'NORTH': 'Grand Hall', 'EAST': 'Study'},
+         'Study': {'WEST': 'Dinning Room'}}
+
+# Dictionary of Items and the corresponding rooms
+items = {'Front Porch': None,
+         'Grand Hall': 'Flashlight',
+         'Kitchen': 'IR Scanner',
+         'Pantry': 'Ghost Vacuum',
+         'Master Bedroom': 'Seth',
+         'Secret Room': 'Ghost',
+         'Dinning Room': 'Key',
+         'Study': 'Map'}
+
+if start_question != 'y':
+    print('Then keep walking along! ')
+    exit()
+else:
+
+    # Background to the story
+    print('Soon as you start to approach the porch your friend Seth falls into a trap door!! He is now lost inside '
+          'you must go in and find him!')
+    print('')
+    print('You now find yourself on the Front Porch!')
+
+
+# loop for pay again question
+while True:
+    current_items = []
+    current_room = 'Front Porch'
+
+    # Make sure we are not in the secret room with the villain.
+    while current_room != 'Secret Room':
+        temp = rooms[current_room]
+        possible_direction = list(temp.keys())
+        print('Possible ways to go', possible_direction)
+        direction = input('Which way will you go?: ')
+        direction = direction.upper()
+
+        # if the user selected a direction that is not valid
+        if direction not in possible_direction:
+            print('Invalid Direction!! Try again! ')
+        else:
+            # The code for the input direction of EAST
+            if direction == 'EAST':
+                current_room = rooms[current_room][direction]
+                if current_room == 'Secret Room':
+                    break
+                else:
+                    print('')
+                    # Show what room you are in and what item you have found
+                    print('You are now in', current_room + '! You also found a', items[current_room])
+                    print('')
+                    if items[current_room] is None or items[current_room] in current_items:
+                        print('You can not have two of the same items!')
+                        print('')
+                    elif items[current_room] not in current_items:
+                        print('You just put', items[current_room], 'in your pocket! ')
+                        # append the item you found in the list
+                        current_items.append(items[current_room])
+                    # show your new inventory.
+                    print('Items in your pocket: ', current_items)
+                    print('')
+                # The code for the input direction of WEST
+            elif direction == 'WEST':
+                current_room = rooms[current_room][direction]
+                if current_room == 'Secret Room':
+                    break
+                else:
+                    print('')
+                    print('You are now in', current_room + '! You also found a', items[current_room])
+                    print('')
+                    if items[current_room] is None or items[current_room] in current_items:
+                        print('You can not have two of the same items!')
+                        print('')
+                    elif items[current_room] not in current_items:
+                        print('You just put', items[current_room], 'in your pocket! ')
+                        current_items.append(items[current_room])
+                    print('Items in your pocket: ', current_items)
+                    print('')
+            # The code for the input direction for North
+            elif direction == 'NORTH':
+                current_room = rooms[current_room][direction]
+                if current_room == 'Secret Room':
+                    break
+                else:
+                    print('')
+                    print('You are now in', current_room + '! You also found a', items[current_room])
+                    print('')
+                    if items[current_room] is None or items[current_room] in current_items:
+                        print('You can not have two of the same items!')
+                        print('')
+                    elif items[current_room] not in current_items:
+                                            print('You just put', items[current_room], 'in your pocket! ')
+                        current_items.append(items[current_room])
+                    print('Items in your pocket: ', current_items)
+                    print('')
+            # The code for the input direction for South
+            elif direction == 'SOUTH':
+                current_room = rooms[current_room][direction]
+                if current_room == 'Secret Room':
+                    break
+                else:
+                    print('')
+                    print('You are now in', current_room + '! You also found a', items[current_room])
+                    print('')
+                    if items[current_room] is None or items[current_room] in current_items:
+                        print('You can not have two of the same items!')
+                        print('')
+                    elif items[current_room] not in current_items:
+                        print('You just put', items[current_room], 'in your pocket! ')
+                        current_items.append(items[current_room])
+                    print('Items in your pocket: ', current_items)
+                    print('')
+
+    # rest of secret room loop, so that when we are in the room with the ghost it will see if we have all the items
+    # we need to win or loose.
+    if len(current_items) == 6:
+        print('You and Seth found a ghost!')
+        print('You check your pockets to see if you found enough items to defeat the ghost, you have: ', current_items)
+        print('')
+        print('YOU HAVE ENOUGH ITEMS!!')
+        print('You have beaten the ghost!')
+    else:
+        print('You and Seth found a ghost!')
+        print('You check your pockets to see if you found enough items to defeat the ghost, you have: ', current_items)
+        print('')
+        print('....')
+        print('')
+        print('YOU DO NOT HAVE ENOUGH ITEMS TO BEAT THE GHOST!')
+        print('You and Seth become ghost and are stuck in the house forever! ')
+
+    # Asking another question to see if they want to play again.
+    print('')
+    choice = input('Do you want to play again (y/n): ')
+    if choice == 'y':
+        pass
+    else:
+        print('Thanks for playing!')
+        break
+
+
